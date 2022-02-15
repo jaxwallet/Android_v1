@@ -711,6 +711,9 @@ public class BackupKeyActivity extends BaseActivity implements
         if (mnemonicArray == null) return;
         layoutWordHolder.setFlexDirection(FlexDirection.ROW);
 
+        if ( layoutWordHolder.getChildCount() > 0 )
+            layoutWordHolder.removeAllViews();
+
         for (String word : mnemonicArray) {
             layoutWordHolder.addView(generateSeedWordTextView(word));
         }
