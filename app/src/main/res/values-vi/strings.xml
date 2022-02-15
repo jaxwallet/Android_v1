@@ -857,4 +857,5 @@
     <string name="confirm_transaction_in_wallet">Confirm This Transaction In Your Wallet</string>
     <string name="toolbar_header_swap">Swap</string>
     <string name="activity_cashback">Cashback</string>
+    <string name="error_seed_phrase_must_words">Seed phrase can only contain words</string>
 </resources>
