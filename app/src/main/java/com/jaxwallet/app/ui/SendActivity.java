@@ -481,6 +481,26 @@ public class SendActivity extends BaseActivity implements AmountReadyCallback, S
         dialog.show();
     }
 
+    private void askUserForInsufficientGasConfirm()
+    {
+        Token base = viewModel.getToken(token.tokenInfo.chainId, wallet.address);
+
+        AWalletAlertDialog dialog = new AWalletAlertDialog(SendActivity.this);
+        dialog.setIcon(AWalletAlertDialog.WARNING);
+        dialog.setTitle(R.string.insufficient_gas);
+        dialog.setMessage(getBaseContext().getString(R.string.ask_buy_gas, base.getShortSymbol()));
+        dialog.setButtonText(R.string.action_show_address);
+        dialog.setSecondaryButtonText(R.string.cancel_transaction);
+        dialog.setButtonListener(v -> {
+            dialog.dismiss();
+            viewModel.showContractInfo(this, wallet, token);
+        });
+        dialog.setSecondaryButtonListener(v -> {
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
     @Override
     protected void onDestroy() {
         if (dialog != null && dialog.isShowing())
@@ -525,9 +545,9 @@ public class SendActivity extends BaseActivity implements AmountReadyCallback, S
             sendAmount = NEGATIVE;
             //insufficient balance
             if(base.balance.compareTo(BigDecimal.ZERO) == 0)
-            amountInput.showError(true, 1, base.getSymbolOrShortName());
+                askUserForInsufficientGasConfirm();
             else
-            amountInput.showError(true, 0, "");
+                amountInput.showError(true, 0, "");
             //if currently resolving ENS, stop
             addressInput.stopNameCheck();
         }
