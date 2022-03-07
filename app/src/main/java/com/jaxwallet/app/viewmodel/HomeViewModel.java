@@ -651,4 +651,9 @@ public class HomeViewModel extends BaseViewModel {
         }
         currencyRepository.setDefaultCurrency(preferenceRepository.getDefaultCurrency());
     }
+
+    public boolean getBioMetricsState()
+    {
+        return preferenceRepository.getBioMetricsState();
+    }
 }

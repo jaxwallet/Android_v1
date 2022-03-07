@@ -23,6 +23,10 @@ public interface PreferenceRepositoryType {
 
     void setNotificationState(boolean state);
 
+    boolean getBioMetricsState();
+
+    void setBioMetricsState(boolean state);
+
     String getDefaultLocale();
 
     boolean isFindWalletAddressDialogShown();

@@ -32,6 +32,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -49,6 +51,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.jaxwallet.app.BuildConfig;
 import com.jaxwallet.app.C;
 import com.jaxwallet.app.R;
@@ -243,6 +246,17 @@ public class HomeActivity extends BaseNavigationActivity implements View.OnClick
         viewModel.backUpMessage().observe(this, this::onBackup);
         viewModel.splashReset().observe(this, this::onRequireInit);
 
+        ActivityResultLauncher<Intent> pinUnlockSettingsHandler = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    Toast.makeText(this, "PinCode unlocked", Toast.LENGTH_SHORT).show();
+                });
+
+        if (viewModel.getBioMetricsState()) {
+            Intent intent = new Intent(this, CustomPinActivity.class);
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+            pinUnlockSettingsHandler.launch(intent);
+        }
+
         int lastId = viewModel.getLastFragmentId();
 
         if (getIntent().getBooleanExtra(C.Key.FROM_SETTINGS, false))
@@ -381,9 +395,12 @@ public class HomeActivity extends BaseNavigationActivity implements View.OnClick
     //First time to use
     private void onRequireInit(Boolean aBoolean)
     {
+
         Intent intent = new Intent(this, SplashActivity.class);
         startActivity(intent);
         finish();
+
+
     }
 
     private void onBackup(String address)

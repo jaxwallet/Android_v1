@@ -3,7 +3,12 @@ package com.jaxwallet.app;
 import android.app.Activity;
 import android.app.Application;
 import androidx.fragment.app.Fragment;
+
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.jaxwallet.app.di.DaggerAppComponent;
+import com.jaxwallet.app.ui.CustomPinActivity;
+import com.jaxwallet.app.ui.SplashActivity;
+
 import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -30,9 +35,9 @@ public class App extends Application implements HasActivityInjector, HasSupportF
 				.inject(this);
 
 		// enable pin code for the application
-//		LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
-//		lockManager.enableAppLock(this, CustomPinActivity.class);
-//		lockManager.getAppLock().setShouldShowForgot(false);
+		LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
+		lockManager.enableAppLock(this, CustomPinActivity.class);
+		lockManager.getAppLock().setShouldShowForgot(false);
 	}
 
 	@Override

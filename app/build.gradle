@@ -225,6 +225,10 @@ dependencies {
 
     implementation 'com.github.mailchimp:mailchimp-sdk-android:1.0.0'
     implementation 'androidx.preference:preference-ktx:1.1.1'
+
+    implementation ('com.github.omadahealth:lollipin:2.1.0@aar') {
+        transitive = true
+    }
 }
 
 // WARNING WARNING WARNING

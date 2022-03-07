@@ -47,6 +47,15 @@ public class NewSettingsViewModel extends BaseViewModel {
         preferenceRepository.setNotificationState(notificationState);
     }
 
+    public boolean getBioMetricsState()
+    {
+        return preferenceRepository.getBioMetricsState();
+    }
+    public void setBioMetricsState(boolean bioState)
+    {
+        preferenceRepository.setBioMetricsState(bioState);
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();

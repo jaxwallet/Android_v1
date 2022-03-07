@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -28,6 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.jaxwallet.app.BuildConfig;
 import com.jaxwallet.app.C;
 import com.jaxwallet.app.R;
@@ -51,6 +53,9 @@ import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 
 public class NewSettingsFragment extends BaseFragment {
+
+    private static final int REQUEST_CODE_ENABLE = 11;
+
     @Inject
     NewSettingsViewModelFactory newSettingsViewModelFactory;
 
@@ -199,13 +204,14 @@ public class NewSettingsFragment extends BaseFragment {
                         .withListener(this::onNotificationsSettingClicked)
                         .build();
 
-//        biometricsSetting =
-//                new SettingsItemView.Builder(getContext())
-//                        .withType(SettingsItemView.Type.TOGGLE)
-//                        .withIcon(R.drawable.ic_settings_biometrics)
-//                        .withTitle(R.string.title_biometrics)
-//                        .withListener(this::onBiometricsSettingClicked)
-//                        .build();
+        biometricsSetting =
+                new SettingsItemView.Builder(getContext())
+                        .withType(SettingsItemView.Type.TOGGLE)
+                        .withIcon(R.drawable.ic_settings_biometrics)
+                        .withTitle(R.string.title_biometrics)
+                        .withListener(this::onBiometricsSettingClicked)
+                        .build();
+        biometricsSetting.setToggleState(viewModel.getBioMetricsState());
 
         selectNetworksSetting =
                 new SettingsItemView.Builder(getContext())
@@ -492,8 +498,29 @@ public class NewSettingsFragment extends BaseFragment {
         viewModel.setNotificationState(notificationsSetting.getToggleState());
     }
 
+    ActivityResultLauncher<Intent> pinEnableSettingsHandler = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                Toast.makeText(getActivity(), "PinCode enabled", Toast.LENGTH_SHORT).show();
+                viewModel.setBioMetricsState(true);
+            });
+    ActivityResultLauncher<Intent> pinDisableSettingsHandler = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                Toast.makeText(getActivity(), "PinCode disabled", Toast.LENGTH_SHORT).show();
+                viewModel.setBioMetricsState(false);
+            });
+
     private void onBiometricsSettingClicked() {
-        // TODO: Implementation
+
+        Intent intent = new Intent(getActivity(), CustomPinActivity.class);
+        if (viewModel.getBioMetricsState()) {
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.DISABLE_PINLOCK);
+            pinDisableSettingsHandler.launch(intent);
+        }
+        else {
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+            pinEnableSettingsHandler.launch(intent);
+        }
+
     }
 
     ActivityResultLauncher<Intent> networkSettingsHandler = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
