@@ -122,7 +122,7 @@ public class SharedPreferenceRepository implements PreferenceRepositoryType {
 
     @Override
     public boolean getBioMetricsState() {
-        return pref.getBoolean(BIOMETRICS_KEY, true);
+        return pref.getBoolean(BIOMETRICS_KEY, false);
     }
 
     @Override
