@@ -500,13 +500,21 @@ public class NewSettingsFragment extends BaseFragment {
 
     ActivityResultLauncher<Intent> pinEnableSettingsHandler = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Toast.makeText(getActivity(), "PinCode enabled", Toast.LENGTH_SHORT).show();
-                viewModel.setBioMetricsState(true);
+                if(result.getResultCode() != 0) {
+                    Toast.makeText(getActivity(), "PinCode enabled", Toast.LENGTH_SHORT).show();
+                    viewModel.setBioMetricsState(true);
+                } else {
+                    biometricsSetting.setToggleState(false);
+                }
             });
     ActivityResultLauncher<Intent> pinDisableSettingsHandler = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Toast.makeText(getActivity(), "PinCode disabled", Toast.LENGTH_SHORT).show();
-                viewModel.setBioMetricsState(false);
+                if(result.getResultCode() != 0) {
+                    Toast.makeText(getActivity(), "PinCode disabled", Toast.LENGTH_SHORT).show();
+                    viewModel.setBioMetricsState(false);
+                } else {
+                    biometricsSetting.setToggleState(true);
+                }
             });
 
     private void onBiometricsSettingClicked() {

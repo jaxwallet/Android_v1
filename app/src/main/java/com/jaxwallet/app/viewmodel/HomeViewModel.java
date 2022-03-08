@@ -101,6 +101,7 @@ public class HomeViewModel extends BaseViewModel {
     private final MutableLiveData<String> walletName = new MutableLiveData<>();
     private final MutableLiveData<Wallet> defaultWallet = new MutableLiveData<>();
     private final MutableLiveData<Boolean> splashActivity = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> pinActivity = new MutableLiveData<>();
     private BottomSheetDialog dialog;
 
     HomeViewModel(
@@ -151,6 +152,9 @@ public class HomeViewModel extends BaseViewModel {
 
     public LiveData<Boolean> splashReset() {
         return splashActivity;
+    }
+    public LiveData<Boolean> lockPin() {
+        return pinActivity;
     }
 
     public void prepare() {
@@ -266,6 +270,10 @@ public class HomeViewModel extends BaseViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(wallet -> onWallet(context, wallet), this::walletError);
+    }
+
+    public void unlockPin() {
+        pinActivity.postValue(true);
     }
 
     private void walletError(Throwable throwable)

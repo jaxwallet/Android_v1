@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -119,6 +120,7 @@ public class HomeActivity extends BaseNavigationActivity implements View.OnClick
     private static boolean updatePrompt = false;
     private TutoShowcase backupWalletDialog;
     private boolean isForeground;
+    private boolean unlockPin = false;
 
     public static final int RC_DOWNLOAD_EXTERNAL_WRITE_PERM = 222;
     public static final int RC_ASSET_EXTERNAL_WRITE_PERM = 223;
@@ -128,6 +130,12 @@ public class HomeActivity extends BaseNavigationActivity implements View.OnClick
     public static final int DAPP_TRANSACTION_SEND_REQUEST = 2;
     public static final String STORED_PAGE = "currentPage";
     public static final String RESET_TOKEN_SERVICE = "HOME_reset_ts";
+
+    ActivityResultLauncher<Intent> pinUnlockSettingsHandler = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+//                    Toast.makeText(this, "PinCode unlocked", Toast.LENGTH_SHORT).show();
+                unlockPin = true;
+            });
 
     public HomeActivity()
     {
@@ -245,17 +253,6 @@ public class HomeActivity extends BaseNavigationActivity implements View.OnClick
         viewModel.walletName().observe(this, this::onWalletName);
         viewModel.backUpMessage().observe(this, this::onBackup);
         viewModel.splashReset().observe(this, this::onRequireInit);
-
-        ActivityResultLauncher<Intent> pinUnlockSettingsHandler = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    Toast.makeText(this, "PinCode unlocked", Toast.LENGTH_SHORT).show();
-                });
-
-        if (viewModel.getBioMetricsState()) {
-            Intent intent = new Intent(this, CustomPinActivity.class);
-            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
-            pinUnlockSettingsHandler.launch(intent);
-        }
 
         int lastId = viewModel.getLastFragmentId();
 
@@ -494,6 +491,13 @@ public class HomeActivity extends BaseNavigationActivity implements View.OnClick
                 viewModel.showImportLink(this, magicLink);
             }
         });
+
+        if (viewModel.getBioMetricsState() && !unlockPin) {
+            Log.d("homeactiviyt", "resume test");
+            Intent intent = new Intent(this, CustomPinActivity.class);
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+            pinUnlockSettingsHandler.launch(intent);
+        }
     }
 
     @Override

@@ -36,7 +36,8 @@
         tools:replace="android:name, android:theme, android:allowBackup">
         <activity
             android:name=".ui.CustomPinActivity"
-            android:exported="false" />
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.HomeActivity"
             android:launchMode="singleTask"
