@@ -71,19 +71,15 @@
                 android:layout_above="@id/layoutButtons"
                 android:layout_below="@id/text_invalid"
                 android:gravity="center">
-                <androidx.core.widget.NestedScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp">
-                    <com.google.android.flexbox.FlexboxLayout
-                        android:id="@+id/layout_word_holder"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="12dp"
-                        app:flexDirection="row"
-                        app:flexWrap="wrap" />
-                </androidx.core.widget.NestedScrollView>
 
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/layout_word_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    app:flexDirection="row"
+                    app:flexWrap="wrap" />
 
             </LinearLayout>
         </LinearLayout>

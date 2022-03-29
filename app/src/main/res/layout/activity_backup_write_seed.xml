@@ -27,22 +27,16 @@
             android:textColor="@color/text_black"
             android:textSize="@dimen/sp20" />
 
-        <androidx.core.widget.NestedScrollView
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/layout_word_holder"
             android:layout_width="match_parent"
-                android:layout_gravity="center"
-            android:layout_height="300dp">
-            <com.google.android.flexbox.FlexboxLayout
-                android:id="@+id/layout_word_holder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/text_title"
-                android:background="@drawable/background_round"
-                android:padding="15dp"
-                app:flexDirection="row"
-                app:flexWrap="wrap" />
-        </androidx.core.widget.NestedScrollView>
-
-
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_title"
+            android:layout_gravity="center"
+            android:background="@drawable/background_round"
+            android:padding="15dp"
+            app:flexDirection="row"
+            app:flexWrap="wrap" />
 
         <com.jaxwallet.app.widget.FunctionButtonBar
             android:id="@+id/layoutButtons"
