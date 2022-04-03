@@ -26,6 +26,11 @@ public class CustomViewSettings
             //new TokenInfo("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", "USD Coin", "USDC", 6, true, EthereumNetworkBase.MAINNET_ID),
             //new TokenInfo("0x6C8c6b02E7b2BE14d4fA6022Dfd6d75921D90E4E", "Compound BAT", "CBAT", 8, true, EthereumNetworkBase.MAINNET_ID)
             new TokenInfo("0xca1262e77fb25c0a4112cfc9bad3ff54f617f2e6", "Wrapped JAXNET", "WJXN", 0, true, EthereumNetworkBase.BINANCE_MAIN_ID),
+            new TokenInfo("0xe9e7cea3dedca5984780bafc599bd69add087d56", "Binance USD", "BUSD", 18, true, EthereumNetworkBase.BINANCE_MAIN_ID),
+            new TokenInfo("0xf07352e8e3b88e8500d24301f5fc05a916d708cc", "Wrapped JAX", "WJAX", 4, true, EthereumNetworkBase.BINANCE_MAIN_ID),
+            new TokenInfo("0xeff49aed7baaba69dcbda577b34850c41e8f5226", "JAX Dollar", "JAXUD", 18, true, EthereumNetworkBase.BINANCE_MAIN_ID),
+            new TokenInfo("0x86ece7d9cda927b3ec4044df67b082fa55a1c198", "JAX Rupee", "JAXRE", 18, true, EthereumNetworkBase.BINANCE_MAIN_ID),
+
             new TokenInfo("0xa51bcdc792285598ba7443c71d557e0b7df6f991", "Binance USD", "BUSD", 18, true, EthereumNetworkBase.BINANCE_TEST_ID),
             new TokenInfo("0x3a171b7c5d671e3c4bb5823b8fd265f4e4e9a399", "Wrapped Jaxnet", "WJXN", 0, true, EthereumNetworkBase.BINANCE_TEST_ID),
             new TokenInfo("0x783f4a2efab4f34d6a0d88b71cf1fac6d9b46ff0", "Wrapped JAX", "WJAX", 4, true, EthereumNetworkBase.BINANCE_TEST_ID),
