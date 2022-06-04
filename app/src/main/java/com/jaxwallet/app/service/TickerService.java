@@ -263,7 +263,7 @@ public class TickerService
                     .get()
                     .build();
 
-            if (BuildConfig.DEBUG) Log.d(TAG, "Updating Price: url->" + COINGECKO_API.replace(CHAIN_IDS, apiChainName).replace(CONTRACT_ADDR, sb.toString()));
+            if (BuildConfig.DEBUG) Log.d(TAG, "Updating Price");
 
             try (okhttp3.Response response = httpClient.newCall(request)
                     .execute())
