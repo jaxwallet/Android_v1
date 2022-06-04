@@ -359,7 +359,11 @@ public class TokensAdapter extends RecyclerView.Adapter<BinderViewHolder> {
                 }
                 break;
             case FILTER_CURRENCY:
-                if (!CustomViewSettings.isLockedToken(token.getChain(), token.getAddress()) || token.getAddress().equalsIgnoreCase("0x3a171b7c5d671e3c4bb5823b8fd265f4e4e9a399"))
+                if (!CustomViewSettings.isLockedToken(token.getChain(), token.getAddress())
+                        || token.getAddress().equalsIgnoreCase("0x3a171b7c5d671e3c4bb5823b8fd265f4e4e9a399")
+                        || token.getAddress().equalsIgnoreCase("0xca1262e77fb25c0a4112cfc9bad3ff54f617f2e6")
+                        || token.getAddress().equalsIgnoreCase("0x643d58cf4af8f5fa32139981d85b8629802bcd5e")
+                        )
                 {
                     allowThroughFilter = false;
                 }
