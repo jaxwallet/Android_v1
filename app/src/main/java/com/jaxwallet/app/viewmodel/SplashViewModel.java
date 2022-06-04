@@ -1,6 +1,7 @@
 package com.jaxwallet.app.viewmodel;
 
 import static com.jaxwallet.app.entity.tokenscript.TokenscriptFunction.ZERO_ADDRESS;
+import static com.jaxwallet.ethereum.EthereumNetworkBase.BINANCE_MAIN_ID;
 import static com.jaxwallet.ethereum.EthereumNetworkBase.BINANCE_TEST_ID;
 
 import android.app.Activity;
@@ -157,7 +158,7 @@ public class SplashViewModel extends ViewModel
 
     public void setDefaultBrowser()
     {
-        preferenceRepository.setActiveBrowserNetwork(BINANCE_TEST_ID);
+        preferenceRepository.setActiveBrowserNetwork(preferenceRepository.isActiveMainnet() ? BINANCE_MAIN_ID : BINANCE_TEST_ID);
     }
 
     public long getInstallTime() {
