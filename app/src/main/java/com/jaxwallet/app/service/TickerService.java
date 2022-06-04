@@ -237,7 +237,6 @@ public class TickerService
         final String dexGuruName = dexGuruChainIdToAPISymbol.get(chainId);
         if (( !canUpdate.isEmpty() && ! canUpdate.containsKey(chainId)) || erc20Tokens.size() == 0)
             return Single.fromCallable(() -> 0);
-        if(BuildConfig.DEBUG) Log.d(TAG, "price for chainid:"+chainId+"tokens:"+erc20Tokens.size());
 
         final Map<String, TokenCardMeta> lookupMap = new HashMap<>();
         for (TokenCardMeta tcm : erc20Tokens) { lookupMap.put(tcm.getAddress().toLowerCase(), tcm); }
