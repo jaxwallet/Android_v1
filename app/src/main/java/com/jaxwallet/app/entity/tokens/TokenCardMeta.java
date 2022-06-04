@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 
 import com.jaxwallet.app.entity.ContractType;
+import com.jaxwallet.app.entity.CustomViewSettings;
 import com.jaxwallet.app.repository.EthereumNetworkBase;
 import com.jaxwallet.app.repository.EthereumNetworkRepository;
 import com.jaxwallet.app.repository.TokensRealmSource;
@@ -121,6 +122,8 @@ public class TokenCardMeta implements Comparable<TokenCardMeta>, Parcelable
     public static int calculateTokenNameWeight(long chainId, String tokenAddress, AssetDefinitionService svs, String tokenName, String symbol, boolean isEth)
     {
         int weight = 1000; //ensure base eth types are always displayed first
+        if(CustomViewSettings.isLockedToken(chainId, tokenAddress))
+            return weight;
         String name = svs != null ? svs.getTokenName(chainId, tokenAddress, 1) : null;
         if (name != null)
         {
