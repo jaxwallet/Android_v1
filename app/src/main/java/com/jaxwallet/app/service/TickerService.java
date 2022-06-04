@@ -1,6 +1,7 @@
 package com.jaxwallet.app.service;
 
 import static com.jaxwallet.app.entity.tokenscript.TokenscriptFunction.ZERO_ADDRESS;
+import static com.jaxwallet.app.repository.TokensRealmSource.TAG;
 import static com.jaxwallet.ethereum.EthereumNetworkBase.ARBITRUM_MAIN_ID;
 import static com.jaxwallet.ethereum.EthereumNetworkBase.ARTIS_SIGMA1_ID;
 import static com.jaxwallet.ethereum.EthereumNetworkBase.AVALANCHE_ID;
@@ -17,6 +18,7 @@ import static com.jaxwallet.ethereum.EthereumNetworkBase.XDAI_ID;
 import static org.web3j.protocol.core.methods.request.Transaction.createEthCallTransaction;
 
 import android.text.format.DateUtils;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -25,6 +27,7 @@ import com.jaxwallet.app.entity.CoinGeckoTicker;
 import com.jaxwallet.app.entity.DexGuruTicker;
 import com.jaxwallet.app.entity.tokens.TokenCardMeta;
 import com.jaxwallet.app.entity.tokens.TokenTicker;
+import com.jaxwallet.app.repository.EthereumNetworkRepository;
 import com.jaxwallet.app.repository.PreferenceRepositoryType;
 import com.jaxwallet.app.repository.TokenLocalSource;
 import com.jaxwallet.app.repository.TokenRepository;
@@ -232,8 +235,9 @@ public class TickerService
     {
         final String apiChainName = coinGeckoChainIdToAPIName.get(chainId);
         final String dexGuruName = dexGuruChainIdToAPISymbol.get(chainId);
-        if (canUpdate.containsKey(chainId) || erc20Tokens.size() == 0)
+        if (( !canUpdate.isEmpty() && ! canUpdate.containsKey(chainId)) || erc20Tokens.size() == 0)
             return Single.fromCallable(() -> 0);
+        if(BuildConfig.DEBUG) Log.d(TAG, "price for chainid:"+chainId+"tokens:"+erc20Tokens.size());
 
         final Map<String, TokenCardMeta> lookupMap = new HashMap<>();
         for (TokenCardMeta tcm : erc20Tokens) { lookupMap.put(tcm.getAddress().toLowerCase(), tcm); }
@@ -259,6 +263,8 @@ public class TickerService
                     .get()
                     .build();
 
+            if (BuildConfig.DEBUG) Log.d(TAG, "Updating Price: url->" + COINGECKO_API.replace(CHAIN_IDS, apiChainName).replace(CONTRACT_ADDR, sb.toString()));
+
             try (okhttp3.Response response = httpClient.newCall(request)
                     .execute())
             {
@@ -267,6 +273,7 @@ public class TickerService
 
                 for (CoinGeckoTicker t : tickers)
                 {
+
                     BigDecimal changeValue = new BigDecimal(t.usdChange);
                     TokenTicker tTicker = new TokenTicker(String.valueOf(t.usdPrice * currentConversionRate),
                             changeValue.setScale(3, RoundingMode.DOWN).toString(), currentCurrencySymbolTxt, "", System.currentTimeMillis());

@@ -35,7 +35,7 @@ android {
         }
     }
     defaultConfig {
-        versionCode 2
+        versionCode 3
         versionName "0.1"
 
         applicationId "io.jaxwallet"
@@ -44,7 +44,7 @@ android {
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         def XInfuraAPI = "XInfuraAPI"
         //Put your Infura key here, NB with over 30 - 40 users this API key will rate limit, it's only here for bootstrapping a free build
-        def DEFAULT_INFURA_API_KEY = "\"885195b635fd4eda944c844964f3032d\"";
+        def DEFAULT_INFURA_API_KEY = "\"9a026eb1db1949c1bde3436ec601d232\"";
 
         buildConfigField 'int', 'DB_VERSION', '35'
         buildConfigField "String", XInfuraAPI, DEFAULT_INFURA_API_KEY

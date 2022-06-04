@@ -93,8 +93,6 @@ public class TokensService
     @Nullable
     private Disposable eventTimer;
     @Nullable
-    private Disposable priceEventTimer;
-    @Nullable
     private Disposable checkUnknownTokenCycle;
     @Nullable
     private Disposable queryUnknownTokensDisposable;
@@ -241,23 +239,18 @@ public class TokensService
                 .doOnNext(l -> checkTokensBalance())
                 .observeOn(Schedulers.newThread()).subscribe();
 
-        final Token t = getNextInBalanceUpdateQueue();
-        priceEventTimer = Observable.interval(1, 500, TimeUnit.MILLISECONDS)
-                .doOnNext(l -> checkERC20(t.tokenInfo.chainId))
-                .observeOn(Schedulers.newThread()).subscribe();
     }
 
     public void startUpdateCycle()
     {
         if (currentAddress == null || (eventTimer != null && !eventTimer.isDisposed())) return;
-        if (currentAddress == null || (priceEventTimer != null && !priceEventTimer.isDisposed())) return;
         if (balanceCheckDisposable != null && !balanceCheckDisposable.isDisposed()) { balanceCheckDisposable.dispose(); }
         if (erc20CheckDisposable != null && !erc20CheckDisposable.isDisposed()) { erc20CheckDisposable.dispose(); }
 
         setupFilters();
         openSeaCheck = System.currentTimeMillis() + 3*DateUtils.SECOND_IN_MILLIS;
 
-        priceEventTimer = Single.fromCallable(() -> {
+        eventTimer = Single.fromCallable(() -> {
             startupPass();
             tokenRepository.createBaseNetworkTokens(currentAddress);
             addUnresolvedContracts(ethereumNetworkRepository.getAllKnownContracts(getNetworkFilters()));
@@ -314,12 +307,6 @@ public class TokensService
         {
             eventTimer.dispose();
             eventTimer = null;
-        }
-
-        if (priceEventTimer != null && !priceEventTimer.isDisposed())
-        {
-            priceEventTimer.dispose();
-            priceEventTimer = null;
         }
 
         if (balanceCheckDisposable != null && !balanceCheckDisposable.isDisposed()) { balanceCheckDisposable.dispose(); }
@@ -576,10 +563,10 @@ public class TokensService
             checkChainVisibility(t);
         }
 
-//        if (t.isEthereum())
-//        {
-//            checkERC20(t.tokenInfo.chainId);
-//        }
+        if (t.isEthereum())
+        {
+            checkERC20(t.tokenInfo.chainId);
+        }
     }
 
     private void checkChainVisibility(Token t)
