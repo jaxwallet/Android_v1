@@ -179,6 +179,12 @@ public class TokenIcon extends ConstraintLayout
             loadFromAltRepo();
         }
 
+        if(token.getShortSymbol().equals("WJXN2"))
+            currentRq = Glide.with(getContext())
+                    .load(R.drawable.wjxn_2)
+                    .placeholder(R.drawable.ic_token_eth)
+                    .listener(requestListener)
+                    .into(viewTarget).getRequest();
         if(token.getShortSymbol().equals("WJXN"))
             currentRq = Glide.with(getContext())
                     .load(R.drawable.wjxn)
