@@ -113,7 +113,7 @@ Java_com_jaxwallet_app_service_TransactionsNetworkClient_getBSCExplorerKey( JNIE
 #if (HAS_KEYS == 1)
     return getBSCExplorerKey(env);
 #else
-    return (*env)->NewStringUTF(env, "6MRQ6WMY5F9DSR372BCBF9GCN6R6ZY8IWH");
+    return (*env)->NewStringUTF(env, "SJQMMR1HC765XDQKFBH1M93TGNTMG2ABX7");
 #endif
 }
 
@@ -123,7 +123,7 @@ Java_com_jaxwallet_app_service_TransactionsNetworkClient_getEtherscanKey( JNIEnv
 #if (HAS_KEYS == 1)
     return getDecryptedKey(env, etherscanKey);
 #else
-    const jstring key = "MKSXIBRBF28X3VU4QXW8PNG4MTSN5QIMXX";
+    const jstring key = "FBQNUF2DQA1ETGCR2PEIC5SHHUKRUB88Q6";
     return (*env)->NewStringUTF(env, key);
 #endif
 }
@@ -134,7 +134,7 @@ Java_com_jaxwallet_app_service_GasService_getEtherscanKey( JNIEnv* env, jobject 
 #if (HAS_KEYS == 1)
     return getDecryptedKey(env, etherscanKey);
 #else
-    const jstring key = "MKSXIBRBF28X3VU4QXW8PNG4MTSN5QIMXX";
+    const jstring key = "FBQNUF2DQA1ETGCR2PEIC5SHHUKRUB88Q6";
     return (*env)->NewStringUTF(env, key);
 #endif
 }
@@ -154,7 +154,7 @@ Java_com_jaxwallet_app_service_GasService_getPolygonScanKey(JNIEnv *env, jobject
 #if (HAS_KEYS == 1)
     return getDecryptedKey(env, polygonScanKey);
 #else
-    const jstring key = "";
+    const jstring key = "JAQMW72YSC32Q9VT3WU72TTMYAETUWBXFG";
     return (*env)->NewStringUTF(env, key);
 #endif
 }
