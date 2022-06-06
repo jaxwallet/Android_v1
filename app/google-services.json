@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:319288242026:android:b09362eeef91a08c97bf13",
+        "mobilesdk_app_id": "1:319288242026:android:77bca87c4be78e3697bf13",
         "android_client_info": {
-          "package_name": "io.jaxwallet"
+          "package_name": "jax.money"
         }
       },
       "oauth_client": [

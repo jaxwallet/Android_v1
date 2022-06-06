@@ -161,6 +161,8 @@ public class SignTransactionDialog
         catch (ProviderException e)
         {
             authCallback.authenticateFail(activity.getString(R.string.authentication_error), AuthenticationFailType.BIOMETRIC_AUTHENTICATION_NOT_AVAILABLE, callbackId);
+        } catch ( IllegalArgumentException e) {
+            authCallback.authenticateFail(activity.getString(R.string.authentication_error), AuthenticationFailType.BIOMETRIC_AUTHENTICATION_NOT_AVAILABLE, callbackId);
         }
     }
 
